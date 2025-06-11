@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Spam Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Email Spam Detection</h1>
+
+        <form action="{{ url_for('predict') }}" method="post">
+            <label for="user_text">Enter Email Text:</label>
+            <textarea name="user_text" id="user_text" required>{{ request.form['user_text'] if 'user_text' in request.form else '' }}</textarea>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction is not none %}
+            <div class="result {{ 'spam' if prediction == 'Spam' else 'not-spam' }}">
+                Prediction: {{ prediction }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
